@@ -20,7 +20,6 @@ import { diskStorage } from 'multer';
 import { randomUUID } from 'crypto';
 import path, { extname } from 'path';
 import { PrismaService } from '@src/prisma.service';
-import { Readable } from 'stream';
 import fs from 'fs';
 import type { Request, Response } from 'express';
 
