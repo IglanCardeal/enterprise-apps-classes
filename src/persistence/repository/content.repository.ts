@@ -14,7 +14,6 @@ const contentInclude = Prisma.validator<Prisma.ContentInclude>()({
     },
   },
 });
-
 @Injectable()
 export class ContentRepository {
   private readonly model: PrismaService['content'];
@@ -71,21 +70,17 @@ export class ContentRepository {
       if (!content) {
         return;
       }
-
       return this.mapToEntity(content);
-    } catch (error) {
-      this.handleAndThrowError(error);
-    }
+    } catch (error) {}
   }
 
   private mapToEntity<
     T extends Prisma.ContentGetPayload<{
       include: typeof contentInclude;
     }>,
-  >(content: T | null): ContentEntity {
-    if (!content || !content.Movie) {
-      //Temporary until I add support to tv shows
-      throw new Error('Movie and video must be present');
+  >(content: T) {
+    if (!content.Movie) {
+      throw new Error('Movie must be defined');
     }
 
     const contentEntity = ContentEntity.createFrom({
@@ -96,7 +91,6 @@ export class ContentRepository {
       createdAt: new Date(content.createdAt),
       updatedAt: new Date(content.updatedAt),
     });
-
     if (this.isMovie(content) && content.Movie.Video) {
       contentEntity.addMedia(
         MovieEntity.createFrom({
