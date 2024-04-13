@@ -1,4 +1,14 @@
-import { BadRequestException, Controller, Get, HttpCode, HttpStatus, Post, Req, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -55,5 +65,4 @@ export class AppController {
     console.log(files);
     return 'video uploaded';
   }
-}
 }
