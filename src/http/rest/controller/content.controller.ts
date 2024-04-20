@@ -21,6 +21,8 @@ import { Request, Response } from 'express';
 import fs from 'fs';
 import { diskStorage } from 'multer';
 import path, { extname } from 'path';
+import { RestResponseInterceptor } from '../interceptor/rest-response.interceptor';
+import { CreateVideoResponseDto } from '../dto/response/create-video-response.dto';
 
 @Controller('content')
 export class ContentController {
@@ -62,6 +64,7 @@ export class ContentController {
       },
     ),
   )
+  @UseInterceptors(new RestResponseInterceptor(CreateVideoResponseDto))
   async uploadVideo(
     @Req() _req: Request,
     @Body()
