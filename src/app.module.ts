@@ -4,6 +4,7 @@ import { ContentController } from '@src/http/rest/controller/content.controller'
 import { ContentManagementService } from '@src/core/service/content-management.service';
 import { MediaPlayerService } from '@src/core/service/media-player.service';
 import { ContentRepository } from './persistence/repository/content.repository';
+import { VideoRepository } from './persistence/repository/video.repository';
 
 @Module({
   imports: [],
@@ -13,6 +14,7 @@ import { ContentRepository } from './persistence/repository/content.repository';
     ContentManagementService,
     MediaPlayerService,
     ContentRepository,
+    VideoRepository,
   ],
 })
 export class AppModule {}
