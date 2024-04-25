@@ -5,10 +5,11 @@ import { ContentManagementService } from '@src/core/service/content-management.s
 import { MediaPlayerService } from '@src/core/service/media-player.service';
 import { ContentRepository } from './persistence/repository/content.repository';
 import { VideoRepository } from './persistence/repository/video.repository';
+import { MediaPlayerController } from './http/rest/controller/media-player.controller';
 
 @Module({
   imports: [],
-  controllers: [ContentController],
+  controllers: [ContentController, MediaPlayerController],
   providers: [
     PrismaService,
     ContentManagementService,
