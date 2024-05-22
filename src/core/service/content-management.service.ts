@@ -3,6 +3,7 @@ import { ContentEntity, ContentType } from '@src/core/entity/content.entity';
 import { MovieEntity } from '@src/core/entity/movie.entity';
 import { ThumbnailEntity } from '@src/core/entity/thumbnail.entity';
 import { VideoEntity } from '@src/core/entity/video.entity';
+import { ConfigService } from '@src/infra/module/config/service/config.service';
 import { ContentRepository } from '@src/persistence/repository/content.repository';
 
 export interface CreateContentData {
