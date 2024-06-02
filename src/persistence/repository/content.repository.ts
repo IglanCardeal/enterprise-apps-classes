@@ -4,7 +4,7 @@ import { ContentEntity } from '@src/core/entity/content.entity';
 import { MovieEntity } from '@src/core/entity/movie.entity';
 import { ThumbnailEntity } from '@src/core/entity/thumbnail.entity';
 import { VideoEntity } from '@src/core/entity/video.entity';
-import { PrismaService } from '@src/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 const contentInclude = Prisma.validator<Prisma.ContentInclude>()({
   Movie: {
