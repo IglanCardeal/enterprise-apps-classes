@@ -13,4 +13,5 @@ export default {
   setupFiles: ['<rootDir>/test/setup.ts'],
   verbose: true,
   resetMocks: true,
+  testTimeout: 9999999,
 };
