@@ -74,7 +74,13 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
+    "moduleNameMapper": {
+      "^@contentModule/(.*)$": "<rootDir>/src/module/content/$1",
+      "^@src/(.*)$": "<rootDir>/src/$1",
+      "^@database/(.*)$": "<rootDir>/database/$1",
+      "^@testInfra/(.*)$": "<rootDir>/test/$1"
+    },
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
