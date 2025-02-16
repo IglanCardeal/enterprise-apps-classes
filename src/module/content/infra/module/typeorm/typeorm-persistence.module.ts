@@ -18,9 +18,15 @@ export class TypeOrmPersistenceModule {
           imports: [ConfigModule.forRoot()],
           inject: [ConfigService],
           useFactory: async (...args: any[]) => {
-            const configService: ConfigService = args.find(
+            const configService: ConfigService | undefined = args.find(
               (arg) => arg instanceof ConfigService,
             );
+
+            if (!configService) {
+              throw new Error(
+                'ConfigService not found in injected dependencies',
+              );
+            }
 
             return {
               type: 'postgres',
