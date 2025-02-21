@@ -4,7 +4,7 @@ import {
   ConfigModuleOptions as NestConfigModuleOptions,
 } from '@nestjs/config';
 import { ConfigService } from './service/config.service';
-import { factory } from '@contentModule/infra/module/config/util/config.factory';
+import { factory } from './util/config.factory';
 
 export class ConfigModule {
   static forRoot(options?: NestConfigModuleOptions): DynamicModule {

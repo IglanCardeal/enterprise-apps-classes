@@ -8,7 +8,7 @@ import { PersistenceModule } from '@contentModule/persistence/persistence.module
 import { VideoUploadController } from '@contentModule/http/rest/controller/video-upload.controller';
 import { ExternalMovieClient } from '@contentModule/http/rest/client/external-movie-rating/external-movie-rating.client';
 import { HttpClient } from '@contentModule/infra/http/client/http.client';
-import { ConfigModule } from './infra/module/config/config.module';
+import { ConfigModule } from '@sharedModules/config/config.module';
 
 @Module({
   imports: [PersistenceModule.forRoot(), ConfigModule.forRoot()],
