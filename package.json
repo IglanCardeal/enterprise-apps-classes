@@ -5,9 +5,6 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "engines": {
-    "node": "18"
-  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -83,14 +80,7 @@
       "json",
       "ts"
     ],
-    "rootDir": ".",
-    "moduleNameMapper": {
-      "^@contentModule/(.*)$": "<rootDir>/src/module/content/$1",
-      "^@sharedModules/(.*)$": "<rootDir>/src/module/shared/module/$1",
-      "^@src/(.*)$": "<rootDir>/src/$1",
-      "^@database/(.*)$": "<rootDir>/database/$1",
-      "^@testInfra/(.*)$": "<rootDir>/test/$1"
-    },
+    "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
