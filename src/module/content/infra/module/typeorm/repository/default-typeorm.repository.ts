@@ -1,10 +1,10 @@
+import { DefaultEntity } from '@contentModule/infra/module/typeorm/entity/default.entity';
 import {
   DataSource,
   EntityTarget,
   FindOptionsWhere,
   Repository,
 } from 'typeorm';
-import { DefaultEntity } from '../entity/default.entity';
 
 export abstract class DefaultTypeOrmRepository<T extends DefaultEntity<T>> {
   private repository: Repository<T>;
