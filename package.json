@@ -110,6 +110,8 @@
       "^@identityModule/(.*)$": "<rootDir>/module/identity/$1",
       "^@sharedModules/(.*)$": "<rootDir>/module/shared/module/$1",
       "^@sharedLibs/(.*)$": "<rootDir>/module/shared/$1",
+      "^@billingModule/(.*)$": "<rootDir>/module/billing/$1",
+      "^@testInfra/(.*)$": "<rootDir>/../test/$1",
       "^@src/(.*)$": "<rootDir>/$1"
     }
   },
