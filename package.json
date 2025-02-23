@@ -89,7 +89,14 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@contentModule/(.*)$": "<rootDir>/module/content/$1",
+      "^@identityModule/(.*)$": "<rootDir>/module/identity/$1",
+      "^@sharedModules/(.*)$": "<rootDir>/module/shared/module/$1",
+      "^@sharedLibs/(.*)$": "<rootDir>/module/shared/$1",
+      "^@src/(.*)$": "<rootDir>/$1"
+    }
   },
   "prisma": {
     "schema": "database/identity/prisma/schema.prisma"
