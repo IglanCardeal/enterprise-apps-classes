@@ -44,14 +44,22 @@ The application is built using:
 - User account management
 - JWT-based authentication
 - Password hashing with bcrypt
+- GraphQL API for user operations
+- Prisma ORM for database interactions
+
+#### Billing Module
+- Payment processing
+- Subscription management
+- Drizzle ORM for database interactions
 
 ### Database Structure
 
-The project uses two separate schemas:
+The project uses three separate schemas:
 
 **Identity Schema:**
 - User management
 - Authentication data
+- Managed with Prisma ORM
 
 **Content Schema:**
 - Movies
@@ -59,6 +67,12 @@ The project uses two separate schemas:
 - Episodes
 - Videos
 - Thumbnails
+- Managed with TypeORM
+
+**Billing Schema:**
+- Payment information
+- Subscription details
+- Managed with Drizzle ORM
 
 ### Technical Stack
 
@@ -72,6 +86,7 @@ The project uses two separate schemas:
 - PostgreSQL
 - Prisma (identity management)
 - TypeORM (content management)
+- Drizzle (billing management)
 
 **Testing:**
 - Jest
@@ -88,10 +103,12 @@ src/
 ├── module/
 │   ├── content/         # Content management
 │   ├── identity/        # User management
+│   ├── billing/         # Billing management
 │   └── shared/          # Shared modules and utilities
 database/
 ├── content/             # Content database configurations
-└── identity/            # Identity database configurations
+├── identity/            # Identity database configurations
+└── billing/             # Billing database configurations
 test/                    # Test configurations and utilities
 ```
 
