@@ -127,6 +127,66 @@ Recommend to use the `--frozen-lockfile` flag
 $ yarn --frozen-lockfile
 ```
 
+## Getting Started
+
+### Prerequisites
+- Node.js 18.17.1
+- Docker and Docker Compose
+- PostgreSQL 15
+- Yarn package manager
+
+### Environment Setup
+1. Copy the example environment file:
+```bash
+$ cp .env.example .env
+```
+
+2. Configure and adjust your environment variables.
+
+### Docker Setup
+Start the development databases using Docker:
+
+```bash
+# Start all services
+$ docker-compose up -d
+
+# Start specific database
+$ docker-compose up -d postgres
+
+# Stop all services
+$ docker-compose down
+
+# View logs
+$ docker-compose logs -f
+```
+
+### Database Setup
+1. Start the Docker containers
+2. Run migrations for each database:
+```bash
+# Content database
+$ yarn run content:db:migrate
+
+# Identity database
+$ yarn run identity:db:migrate
+
+# Billing database
+$ yarn run billing:db:migrate
+```
+
+## API Documentation
+
+### REST API
+The REST API documentation is available at:
+- Swagger UI: http://localhost:3000/api
+- OpenAPI JSON: http://localhost:3000/api-json
+
+### GraphQL API
+The GraphQL playground is available at:
+- http://localhost:3000/graphql
+
+GraphQL schema can be explored interactively in the playground.
+
 ## Running the app
 
 ```bash
@@ -156,6 +216,7 @@ $ yarn run test:cov
 ## Database Management
 
 ```bash
+# Content Database (TypeORM)
 # Generate content database migrations
 $ yarn run content:db:generate
 
@@ -165,11 +226,25 @@ $ yarn run content:db:migrate
 # Drop content database schema
 $ yarn run content:db:drop
 
+# Identity Database (Prisma)
 # Generate identity database migrations
 $ yarn run identity:db:generate
 
 # Push identity database changes
 $ yarn run identity:db:migrate
+
+# Billing Database (Drizzle)
+# Generate billing database migrations
+$ yarn run billing:db:generate
+
+# Run billing database migrations
+$ yarn run billing:db:migrate
+
+# Push billing database changes
+$ yarn run billing:db:push
+
+# Drop billing database schema
+$ yarn run billing:db:drop
 ```
 
 ## Support
