@@ -26,7 +26,11 @@
     "billing:db:generate": "drizzle-kit generate --config database/billing/drizzle/drizzle-migration.config.ts",
     "billing:db:migrate": "drizzle-kit migrate --config database/billing/drizzle/drizzle-migration.config.ts",
     "billing:db:push": "drizzle-kit push --config database/billing/drizzle/drizzle-migration.config.ts",
-    "billing:db:drop": "drizzle-kit drop --config database/billing/drizzle/drizzle-migration.config.ts"
+    "billing:db:drop": "drizzle-kit drop --config database/billing/drizzle/drizzle-migration.config.ts",
+    "db:reset": "npm run content:db:drop && npm run content:db:migrate && npx prisma migrate reset --force && npm run billing:db:drop && npm run billing:db:migrate",
+    "db:generate": "npm run content:db:generate && npm run identity:db:generate && npm run billing:db:generate",
+    "db:migrate": "npm run content:db:migrate && npm run identity:db:migrate && npm run billing:db:migrate",
+    "db:generate:migrate": "npm run db:generate && npm run db:migrate"
   },
   "dependencies": {
     "@apollo/server": "^4.10.5",
