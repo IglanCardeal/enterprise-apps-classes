@@ -19,6 +19,7 @@ import { AgeRecommendationService } from '@contentModule/core/service/age-recomm
 import { CreateEpisodeRequestDto } from '@contentModule/http/rest/dto/request/create-episode-request.dto';
 import { MovieContentModel } from '@contentModule/core/model/movie-content.model';
 import { TvShowContentModel } from '@contentModule/core/model/tv-show-content.model';
+import { Transactional } from 'typeorm-transactional';
 
 export interface CreateMovieData {
   title: string;
@@ -89,6 +90,7 @@ export class ContentManagementService {
     return await this.contentRepository.saveTvShow(content);
   }
 
+  @Transactional()
   async createEpisode(
     contentId: string,
     episodeData: CreateEpisodeRequestDto & {
