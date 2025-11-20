@@ -3,10 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ContentType } from '@contentModule/core/enum/content-type.enum';
 import { ExternalMovieClient } from '@contentModule/http/rest/client/external-movie-rating/external-movie-rating.client';
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
-import { Content } from '@contentModule/persistence/entity/content.entity';
 import { Movie } from '@contentModule/persistence/entity/movie.entity';
 import { Video } from '@contentModule/persistence/entity/video.entity';
 import { Thumbnail } from '@contentModule/persistence/entity/thumbnail.entity';
@@ -19,7 +17,7 @@ import { AgeRecommendationService } from '@contentModule/core/service/age-recomm
 import { CreateEpisodeRequestDto } from '@contentModule/http/rest/dto/request/create-episode-request.dto';
 import { MovieContentModel } from '@contentModule/core/model/movie-content.model';
 import { TvShowContentModel } from '@contentModule/core/model/tv-show-content.model';
-import { Transactional } from 'typeorm-transactional';
+import { TransactionManagerService } from '@contentModule/persistence/transaction-manager.service';
 
 export interface CreateMovieData {
   title: string;
@@ -38,6 +36,7 @@ export class ContentManagementService {
     private readonly videoMetadataService: VideoMetadataService,
     private readonly videoProfanityFilterService: VideoProfanityFilterService,
     private readonly ageRecommendationService: AgeRecommendationService,
+    private readonly transactionManagerService: TransactionManagerService,
   ) {}
 
   async createMovie(
@@ -90,7 +89,6 @@ export class ContentManagementService {
     return await this.contentRepository.saveTvShow(content);
   }
 
-  @Transactional()
   async createEpisode(
     contentId: string,
     episodeData: CreateEpisodeRequestDto & {
@@ -159,10 +157,17 @@ export class ContentManagementService {
 
     content.ageRecommendation = ageRecommendation;
 
-    //not transactional
-    await this.contentRepository.saveTvShow(content);
-    await this.episodeRepository.save(episode);
+    return await this.transactionManagerService.executeWithinTransaction(
+      async () => {
+        await this.transactionManagerService.transactionalContentRepository.saveTvShow(
+          content,
+        );
+        await this.transactionManagerService.transactionalEpisodeRepository.save(
+          episode,
+        );
 
-    return episode;
+        return episode;
+      },
+    );
   }
 }
