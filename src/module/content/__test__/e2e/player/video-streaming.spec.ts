@@ -4,7 +4,7 @@ import { TestingModule } from '@nestjs/testing';
 import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/constants';
 import { videoFactory } from '@contentModule/__test__/factory/video.factory';
 import { ContentModule } from '@contentModule/content.module';
-import { CreateMovieUseCase } from '@contentModule/core/use-case/create-movie.use-case';
+import { faker } from '@faker-js/faker';
 import { Tables } from '@testInfra/enum/table.enum';
 import { testDbClient } from '@testInfra/knex.database';
 import { createNestApp } from '@testInfra/test-e2e.setup';
@@ -12,17 +12,21 @@ import fs from 'fs';
 import nock, { cleanAll } from 'nock';
 import request from 'supertest';
 
+const fakeUserId = faker.string.uuid();
+jest.mock('jsonwebtoken', () => ({
+  verify: (_token: string, _secret: string, _options: any, callback: any) => {
+    callback(null, { sub: fakeUserId });
+  },
+}));
+
 describe('ContentController (e2e)', () => {
   let module: TestingModule;
   let app: INestApplication;
-  let createMovieUseCase: CreateMovieUseCase;
 
   beforeAll(async () => {
     const nestTestSetup = await createNestApp([ContentModule]);
     app = nestTestSetup.app;
     module = nestTestSetup.module;
-
-    createMovieUseCase = module.get<CreateMovieUseCase>(CreateMovieUseCase);
   });
 
   beforeEach(async () => {
@@ -95,6 +99,7 @@ describe('ContentController (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .get(`/stream/${fakeVideo.id}`)
+        .set('Authorization', `Bearer fake-token`)
         .set('Range', range)
         .expect(HttpStatus.PARTIAL_CONTENT);
 
@@ -108,6 +113,7 @@ describe('ContentController (e2e)', () => {
     it('returns 404 if the video is not found', async () => {
       await request(app.getHttpServer())
         .get('/stream/45705b56-a47f-4869-b736-8f6626c940f8')
+        .set('Authorization', `Bearer fake-token`)
         .expect(HttpStatus.NOT_FOUND);
     });
   });
