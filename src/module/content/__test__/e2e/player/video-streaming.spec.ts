@@ -1,8 +1,8 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
 
-import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/constants';
 import { videoFactory } from '@contentModule/__test__/factory/video.factory';
+import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/test.constant';
 import { ContentModule } from '@contentModule/content.module';
 import { faker } from '@faker-js/faker';
 import { Tables } from '@testInfra/enum/table.enum';
