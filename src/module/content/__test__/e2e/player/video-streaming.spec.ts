@@ -1,9 +1,9 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
 
-import { videoFactory } from '@contentModule/__test__/factory/video.factory';
 import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/test.constant';
 import { ContentModule } from '@contentModule/content.module';
+import { CreateMovieUseCase } from '@contentModule/core/use-case/create-movie.use-case';
 import { faker } from '@faker-js/faker';
 import { Tables } from '@testInfra/enum/table.enum';
 import { testDbClient } from '@testInfra/knex.database';
@@ -22,11 +22,14 @@ jest.mock('jsonwebtoken', () => ({
 describe('ContentController (e2e)', () => {
   let module: TestingModule;
   let app: INestApplication;
+  let createMovieUseCase: CreateMovieUseCase;
 
   beforeAll(async () => {
     const nestTestSetup = await createNestApp([ContentModule]);
     app = nestTestSetup.app;
     module = nestTestSetup.module;
+
+    createMovieUseCase = module.get<CreateMovieUseCase>(CreateMovieUseCase);
   });
 
   beforeEach(async () => {
@@ -89,16 +92,20 @@ describe('ContentController (e2e)', () => {
             },
           ],
         });
-      const fakeVideo = videoFactory.build({
-        url: `${CONTENT_TEST_FIXTURES}/sample.mp4`,
+
+      const createdMovie = await createMovieUseCase.execute({
+        title: 'Test Video',
+        description: 'This is a test video',
+        videoUrl: `${CONTENT_TEST_FIXTURES}/sample.mp4`,
+        thumbnailUrl: `${CONTENT_TEST_FIXTURES}/sample.jpg`,
+        sizeInKb: 1430145,
       });
-      await testDbClient(Tables.Video).insert(fakeVideo);
 
       const fileSize = 1430145;
       const range = `bytes=0-${fileSize - 1}`;
 
       const response = await request(app.getHttpServer())
-        .get(`/stream/${fakeVideo.id}`)
+        .get(`/stream/${createdMovie.movie.video.id}`)
         .set('Authorization', `Bearer fake-token`)
         .set('Range', range)
         .expect(HttpStatus.PARTIAL_CONTENT);
